@@ -11,9 +11,9 @@
     "id:list": "ts-node ./src/list-identifiers",
     "id:create": "ts-node ./src/create-identifier",
     "id:createkey": "ts-node ./src/create-key-identifier",
-    "pack": "ts-node ./src/pack-message"
-
-
+    "pack": "ts-node ./src/pack-message",
+    "start": "node ./src/index.js",
+    "build": "cd client && npm install && npm run build"
   },
   "dependencies": {
     "@veramo/core": "^3.1.0",
@@ -28,8 +28,13 @@
     "@veramo/key-manager": "^3.1.0",
     "@veramo/kms-local": "^3.1.0",
     "ethr-did-resolver": "^5.0.4",
+    "express": "^4.17.2",
     "key-did-resolver": "^1.4.4",
     "sqlite3": "^5.0.2",
     "web-did-resolver": "^2.0.12"
+  },
+
+  "engines": {
+    "node": "17.4.0"
   }
 }
