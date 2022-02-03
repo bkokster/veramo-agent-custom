@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "preserveConstEnums": true,
+      "strict": true,
+      "lib": ["es6", "dom", "es2017"],
+      "target": "es6",
+      "rootDir": "./",
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "downlevelIteration": true
+    }
+  }
+  

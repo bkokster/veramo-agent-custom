@@ -1,0 +1,35 @@
+{
+  "name": "veramo-agent",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  },
+  "scripts": {
+    "id:list": "ts-node ./src/list-identifiers",
+    "id:create": "ts-node ./src/create-identifier",
+    "id:createkey": "ts-node ./src/create-key-identifier",
+    "pack": "ts-node ./src/pack-message"
+
+
+  },
+  "dependencies": {
+    "@veramo/core": "^3.1.0",
+    "@veramo/credential-w3c": "^3.1.0",
+    "@veramo/data-store": "^3.1.0",
+    "@veramo/did-comm": "^3.1.0",
+    "@veramo/did-manager": "^3.1.0",
+    "@veramo/did-provider-ethr": "^3.1.0",
+    "@veramo/did-provider-key": "^3.1.0",
+    "@veramo/did-provider-web": "^3.1.0",
+    "@veramo/did-resolver": "^3.1.0",
+    "@veramo/key-manager": "^3.1.0",
+    "@veramo/kms-local": "^3.1.0",
+    "ethr-did-resolver": "^5.0.4",
+    "key-did-resolver": "^1.4.4",
+    "sqlite3": "^5.0.2",
+    "web-did-resolver": "^2.0.12"
+  }
+}
