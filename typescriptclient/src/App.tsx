@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 
-import { agent } from '../../src/veramo/setup'
+// import { agent } from '../../src/veramo/setup'
 
 function App() {
 
@@ -20,30 +20,30 @@ function App() {
   //   resolve()
   // }, [])
 
-  // return (
-  //   <div className="App">
-  //     <header className="App-header">
-  //       <pre id="result">{didDoc && JSON.stringify(didDoc, null, 2)}</pre>
-  //     </header>
-  //   </div>
-  // )
+  return (
+    <div className="App">
+      <header className="App-header">
+        <p> Typescript React App Working </p>
+      </header>
+    </div>
+  )
 
 //
-const [data, setData] = React.useState(null);
+// const [data, setData] = React.useState(null);
 
-React.useEffect(() => {
-  fetch("/api")
-    .then((res) => res.json())
-    .then((data) => setData(data.message));
-}, []);
+// React.useEffect(() => {
+//   fetch("/api")
+//     .then((res) => res.json())
+//     .then((data) => setData(data.message));
+// }, []);
 
-return (
-  <div className="App">
-    <header className="App-header">
-      <p>{!data ? "Loading..." : data}</p>
-    </header>
-  </div>
-);
+// return (
+//   <div className="App">
+//     <header className="App-header">
+//       <p>{!data ? "Loading..." : data}</p>
+//     </header>
+//   </div>
+// );
 
 }
 
