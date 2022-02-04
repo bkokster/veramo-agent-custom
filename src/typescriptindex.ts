@@ -1,6 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { agent } from './veramo/setup';
-import {createDefaultDid, CreateDefaultDidOptions} from './custom-functions'
+
 import path from 'path'
 
 const app = express();
@@ -16,30 +15,9 @@ interface LocationWithTimezone {
       
 async function main(){
 
-  // const didOptions: CreateDefaultDidOptions = {
-
-    //     agent: agent,
-    //     baseUrl : 'trustfront.herokuapp.com'
-
-    // }
-    // createDefaultDid(didOptions);
-
-  // const did = await agent.didManagerGetByAlias({alias:'trustfront.herokuapp.com'})
-  // const did = await agent.didManagerGetOrCreate({'alias':'secondkey'});
-
-  app.get("/api", (req, res) => {
-    res.json({ message: "Hello from server!" });
-  });
-  
   const getLocationsWithTimezones = (request: Request, response: Response, next: NextFunction) => {
     let locations: LocationWithTimezone[] = [
-      // {
-      //   location: 'Germany',
-      //   timezoneName: did.did,
-      //   timezoneAbbr: 'CET',
-      //   utcOffset: 1
-      // },
-      {
+       {
         location: 'Germany',
         timezoneName: 'Central European Time',
         timezoneAbbr: 'CET',
@@ -68,7 +46,16 @@ async function main(){
     response.status(200).json(locations);
   };
  
+  app.get("/api", (req, res) => {
+    res.json({ message: "Hello from server!" });
+  });
+
   app.get('/timezones', getLocationsWithTimezones);
+
+  // All other GET requests not handled before will return our React app
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../typescriptclient/build', 'index.html'));
+  });
 
   app.listen(port, () => {
     console.log(`Timezones by location application is running on port ${port}.`);
