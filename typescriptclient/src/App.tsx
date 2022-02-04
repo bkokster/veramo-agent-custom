@@ -20,30 +20,30 @@ function App() {
   //   resolve()
   // }, [])
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p> Typescript React App Working </p>
-      </header>
-    </div>
-  )
+  // return (
+  //   <div className="App">
+  //     <header className="App-header">
+  //       <p> Typescript React App Working </p>
+  //     </header>
+  //   </div>
+  // )
 
-//
-// const [data, setData] = React.useState(null);
 
-// React.useEffect(() => {
-//   fetch("/api")
-//     .then((res) => res.json())
-//     .then((data) => setData(data.message));
-// }, []);
+const [data, setData] = React.useState(null);
 
-// return (
-//   <div className="App">
-//     <header className="App-header">
-//       <p>{!data ? "Loading..." : data}</p>
-//     </header>
-//   </div>
-// );
+React.useEffect(() => {
+  fetch("/api")
+    .then((res) => res.json())
+    .then((data) => setData(data.message));
+}, []);
+
+return (
+  <div className="App">
+    <header className="App-header">
+      <p>{!data ? "Loading..." : data}</p>
+    </header>
+  </div>
+);
 
 }
 
