@@ -76,7 +76,7 @@ express()
   // .set('views', path.join(__dirname, '../views'))
   // .set('view engine', 'ejs')
   .get("/api", (req, res) => {
-        res.json({ message: "Hello from server!" });
+        res.json({ message: "Hello from server updated!" });
       })
   .get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, '../typescriptclient/build', 'index.html'));
