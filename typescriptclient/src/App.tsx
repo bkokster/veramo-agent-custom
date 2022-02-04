@@ -37,10 +37,18 @@ React.useEffect(() => {
     .then((data) => setData(data.message));
 }, []);
 
+// return (
+//   <div className="App">
+//     <header className="App-header">
+//       <p>{!data ? "Loading..." : data}</p>
+//     </header>
+//   </div>
+// );
+
 return (
   <div className="App">
     <header className="App-header">
-      <p>{!data ? "Loading..." : data}</p>
+      <p>Hallo</p>
     </header>
   </div>
 );
