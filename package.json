@@ -15,7 +15,7 @@
     "id:createkey": "ts-node ./src/create-key-identifier",
     "pack": "ts-node ./src/pack-message",
     "start": "node ./src/typescriptindex.js",
-    "build": "cd typescriptclient && npm install && npm run build",
+    "build": "tsc && cd typescriptclient && npm install && npm run build",
     "sandy": "ts-node ./src/sandbox"
   },
   "dependencies": {
