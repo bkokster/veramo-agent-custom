@@ -1,11 +1,32 @@
+// {
+//   "compilerOptions": {
+//     "preserveConstEnums": true,
+//     "strict": true,
+//     "target": "es6", //<-- changed this to es2017 from es6 as per the Veramo config
+//     "rootDir": "./",
+//     "moduleResolution": "node",
+//     "esModuleInterop": true,
+//     "downlevelIteration": true,    
+
+//   },
+//   "include": [
+//     "./src/typescriptindex.ts"
+//   ]
+// }
+
 {
   "compilerOptions": {
-    "preserveConstEnums": true,
+    "baseUrl": "./",
+    "module": "commonjs",
+    // "outDir": "./dist",
     "strict": true,
-    "target": "es6", //<-- changed this to es2017 from es6 as per the Veramo config
-    "rootDir": "./",
-    "moduleResolution": "node",
+    "target": "ES2019",
+
     "esModuleInterop": true,
-    "downlevelIteration": true,    
-  }
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+  },
+  "include": [
+    "./src/typescriptindex.ts"
+  ]
 }
