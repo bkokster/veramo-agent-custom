@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^17.0.14",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5"
   },
@@ -13,7 +14,7 @@
     "id:createkey": "ts-node ./src/create-key-identifier",
     "pack": "ts-node ./src/pack-message",
     "start": "node ./src/index.js",
-    "build": "cd client && npm install && npm run build"
+    "build": "cd typescriptclient && npm install && npm run build"
   },
   "dependencies": {
     "@veramo/core": "^3.1.0",
@@ -31,9 +32,9 @@
     "express": "^4.17.2",
     "key-did-resolver": "^1.4.4",
     "sqlite3": "^5.0.2",
+    "url-parse": "^1.5.4",
     "web-did-resolver": "^2.0.12"
   },
-
   "engines": {
     "node": "17.4.0"
   }

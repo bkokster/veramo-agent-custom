@@ -1,7 +1,7 @@
 import { DIDCommMessageMediaType, IDIDCommMessage, IPackedDIDCommMessage, _ExtendedIKey, _NormalizedVerificationMethod } from '@veramo/did-comm';
 import { agent } from './veramo/setup'
 import {ECDH,Encrypter,createAuthEncrypter,createAnonEncrypter,createJWE} from 'did-jwt'
-import { DIDDocument, DIDDocumentSection, IAgentContext, IDIDManager, IIdentifier, IKeyManager, IResolver } from '@veramo/core';
+import { TAgent, TKeyType ,DIDDocument, DIDDocumentSection, IAgentContext, IDIDManager, IIdentifier, IKeyManager, IResolver } from '@veramo/core';
 import * as u8a from 'uint8arrays'
 import { resolveDidOrThrow, dereferenceDidKeys, isDefined, convertIdentifierEncryptionKeys, compressIdentifierSecp256k1Keys, createEcdhWrapper } from './veramo/did-comm/utils';
 
@@ -55,7 +55,6 @@ export async function packLight(
         context: IAgentContext<IDIDManager & IKeyManager & IResolver>,
     
     ): Promise<IPackedDIDCommMessage> {
-
 
     // 1. check if args.packing requires authentication and map sender key to skid
     let senderECDH: ECDH | null = null
@@ -131,4 +130,55 @@ export async function packLight(
     const message = JSON.stringify(jwe)
     return { message }
 
+}
+
+// import parse from 'url-parse'
+
+var parse = require('url-parse');
+
+export interface CreateDefaultDidOptions {
+  agent: TAgent<IDIDManager>
+  baseUrl: string
+  messagingServiceEndpoint?: string
+}
+
+export async function createDefaultDid(options: CreateDefaultDidOptions) {
+  if (!options.agent) throw Error('[createDefaultDid] Agent is required')
+  if (!options.baseUrl) throw Error('[createDefaultDid] baseUrl is required')
+
+  const hostname = parse(options.baseUrl).hostname
+
+  const serverIdentifier = await options?.agent?.didManagerGetOrCreate({
+    provider: 'did:web',
+    alias: hostname,
+    options: {
+      keyType: <TKeyType>'Ed25519',
+    },
+  })
+  console.log('🆔', serverIdentifier?.did)
+
+  if (serverIdentifier && options.messagingServiceEndpoint) {
+    const messagingServiceEndpoint = options.baseUrl + options.messagingServiceEndpoint
+
+    console.log('📨 Messaging endpoint', messagingServiceEndpoint)
+    await options?.agent?.didManagerAddService({
+      did: serverIdentifier.did,
+      service: {
+        id: serverIdentifier.did + '#msg',
+        type: 'Messaging',
+        description: 'Handles incoming POST messages',
+        serviceEndpoint: messagingServiceEndpoint,
+      },
+    })
+    // list DIDCommMessaging service at the same endpoint
+    await options?.agent?.didManagerAddService({
+      did: serverIdentifier.did,
+      service: {
+        id: serverIdentifier.did + '#msg-didcomm',
+        type: 'DIDCommMessaging',
+        description: 'Handles incoming DIDComm messages',
+        serviceEndpoint: messagingServiceEndpoint,
+      },
+    })
+  }
 }

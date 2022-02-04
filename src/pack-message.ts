@@ -1,6 +1,6 @@
 import { DIDDocument, IAgentContext, IDIDManager, IKeyManager, IResolver } from '@veramo/core'
 import { IPackDIDCommMessageArgs } from '@veramo/did-comm'
-import { IDIDCommMessageLight, packLight } from './custom-functions'
+import { createDefaultDid, IDIDCommMessageLight, packLight } from './custom-functions'
 import { resolveDidOrThrow } from './veramo/did-comm/utils'
 import { agent } from './veramo/setup'
 
