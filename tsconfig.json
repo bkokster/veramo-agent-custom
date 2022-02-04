@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-
     "preserveConstEnums": true,
     "strict": true,
-    "target": "es2017", //<-- changed this to es2017 from es6 as per the Veramo config
+    "target": "es6", //<-- changed this to es2017 from es6 as per the Veramo config
     "rootDir": "./",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,    
   }
 }
