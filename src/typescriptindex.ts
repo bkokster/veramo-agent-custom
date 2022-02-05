@@ -41,7 +41,7 @@ async function main(){
     },
   })
   
-  // const identifiers = await agent.didManagerFind();
+  const identifiers = await agent.didManagerFind();
   // console.log("Identifiers are being Logged")
 
   // console.log("Identifiers: " + JSON.stringify(identifiers))
@@ -100,11 +100,11 @@ async function main(){
 
   }
 
-  // const packedMessage = await packDIDCommMessageLight();
+  const packedMessage = await packDIDCommMessageLight();
 
   app.get("/api", (req, res) => {
-    // console.log(packedMessage)
-    res.json({ message: 'hallo hallo hallo' });
+    console.log(packedMessage)
+    res.json({ message: identifiers });
   });
 
   app.get("/.well-known/did.json", (req, res) => {

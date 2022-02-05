@@ -72,7 +72,7 @@ async function main() {
     const packedMessage = await pack_message_1.packDIDCommMessageLight();
     app.get("/api", (req, res) => {
         console.log(packedMessage);
-        res.json({ message: packedMessage });
+        res.json({ message: 'hallo hallo hallo' });
     });
     app.get("/.well-known/did.json", (req, res) => {
         res.json(didDocument);
