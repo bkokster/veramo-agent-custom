@@ -78,10 +78,14 @@ async function main(){
     res.json({ message: 'Howzit' });
   });
 
-  const didDocument: DIDDocument = await agent.resolveDidOrThrow('did:web:trustfront.herokuapp.com')
+  // const didDocument: DIDDocument = await agent.resolveDidOrThrow('did:web:trustfront.herokuapp.com')
 
+  const siteIdentifier = await agent.didManagerFind({
+    alias: 'trustfront.herokuapp.com'
+  })
+  
   app.get("/.well-known/did.json", (req, res) => {
-    res.json({ didDocument });
+    res.json({ siteIdentifier });
   });
 
   app.get('/timezones', getLocationsWithTimezones);
