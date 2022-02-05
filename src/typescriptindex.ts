@@ -16,7 +16,7 @@ interface LocationWithTimezone {
       
 async function main(){
   
-  const creation = createkeys()
+  // const creation = createkeys()
   const identifiers = await agent.didManagerFind();
 
   console.log("Identifiers: " + JSON.stringify(identifiers))
