@@ -1,4 +1,4 @@
-import { TAgent, IDIDManager, TKeyType } from '@veramo/core';
+import { TAgent, IDIDManager, TKeyType, DIDDocument, IAgentContext, IKeyManager, IResolver } from '@veramo/core';
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path'
 import { agent } from '../src/veramo/setup'
@@ -37,9 +37,7 @@ async function main(){
       keyType: <TKeyType>'Ed25519',
     },
   })
-
   
-
   // const identifiers = await agent.didManagerFind();
   // console.log("Identifiers are being Logged")
 
@@ -80,11 +78,11 @@ async function main(){
     res.json({ message: 'Howzit' });
   });
 
-  const didDoc = serverIdentifier?.did;
-  app.get("/.well-known/did.json", (req, res) => {
-    res.json({ didDoc });
-  });
+  const didDocument: DIDDocument = await agent.resolveDidOrThrow('did:web:trustfront.herokuapp.com')
 
+  app.get("/.well-known/did.json", (req, res) => {
+    res.json({ didDocument });
+  });
 
   app.get('/timezones', getLocationsWithTimezones);
 
@@ -100,6 +98,8 @@ async function main(){
 }
 
 main().catch(console.log)
+
+
 
 
 // import express from 'express';
