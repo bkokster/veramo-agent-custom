@@ -72,7 +72,7 @@ import path from 'path';
 const PORT = process.env.PORT || 3001
 
 express()
-  .use(express.static(path.join(__dirname, '../public')))
+  .use(express.static(path.join(__dirname, '../typescriptclient/build')))
   // .set('views', path.join(__dirname, '../views'))
   // .set('view engine', 'ejs')
   .get("/api", (req, res) => {
