@@ -18,6 +18,7 @@ async function main(){
   
   // const creation = createkeys()
   const identifiers = await agent.didManagerFind();
+  console.log("Identifiers are being Logged")
 
   console.log("Identifiers: " + JSON.stringify(identifiers))
 
@@ -53,7 +54,7 @@ async function main(){
   };
  
   app.get("/api", (req, res) => {
-    res.json({ message: 'Hey hey hey' });
+    res.json({ message: JSON.stringify(identifiers) });
   });
 
   app.get('/timezones', getLocationsWithTimezones);
