@@ -78,14 +78,26 @@ async function main(){
     res.json({ message: 'Howzit' });
   });
 
-  // const didDocument: DIDDocument = await agent.resolveDidOrThrow('did:web:trustfront.herokuapp.com')
-
+  
   const siteIdentifier = await agent.didManagerFind({
     alias: 'trustfront.herokuapp.com'
   })
+
+  const didDocument: DIDDocument = {
+
+    '@context' : "https://www.w3.org/ns/did/v1",
+    id: siteIdentifier[0].did,
+    service: siteIdentifier[0].services,    
+    controller: siteIdentifier[0].controllerKeyId
+
+  };
   
+
+  // [{"did":"did:web:trustfront.herokuapp.com","provider":"did:web","alias":"trustfront.herokuapp.com","controllerKeyId":"849256a336e1f37947d5f1753ec6951353b10defa64c8313466875d7a859d647","keys":[{"kid":"849256a336e1f37947d5f1753ec6951353b10defa64c8313466875d7a859d647","kms":"local","type":"Ed25519","publicKeyHex":"849256a336e1f37947d5f1753ec6951353b10defa64c8313466875d7a859d647","meta":{"algorithms":["Ed25519","EdDSA"]}}],"services":[]}]}
+
+
   app.get("/.well-known/did.json", (req, res) => {
-    res.json({ siteIdentifier });
+    res.json(didDocument);
   });
 
   app.get('/timezones', getLocationsWithTimezones);
