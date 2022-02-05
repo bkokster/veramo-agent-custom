@@ -49,7 +49,7 @@ async function main(){
   };
  
   app.get("/api", (req, res) => {
-    res.json({ message: identifiers });
+    res.json({ message: 'Hey hey hey' });
   });
 
   app.get('/timezones', getLocationsWithTimezones);
