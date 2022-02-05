@@ -29,21 +29,21 @@ function App() {
   // )
   // {"message":"Hello from server!"}
 
-// const [data, setData] = React.useState(null);
+const [data, setData] = React.useState(null);
 
-// React.useEffect(() => {
-//   fetch("/api")
-//     .then((res) => res.json())
-//     .then((data) => setData(data.message));
-// }, []);
+React.useEffect(() => {
+  fetch("/api")
+    .then((res) => res.json())
+    .then((data) => setData(data.message));
+}, []);
 
-// return (
-//   <div className="App">
-//     <header className="App-header">
-//       <p>{!data ? "Loading..." : data}</p>
-//     </header>
-//   </div>
-// );
+return (
+  <div className="App">
+    <header className="App-header">
+      <p>{!data ? "Loading..." : data}</p>
+    </header>
+  </div>
+);
 
 return (
   <div className="App">
