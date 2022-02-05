@@ -4,7 +4,7 @@ import { createDefaultDid, IDIDCommMessageLight, packLight } from './custom-func
 import { resolveDidOrThrow } from './veramo/did-comm/utils'
 import { agent } from './veramo/setup'
 
-async function main() {
+export async function packDIDCommMessageLight() {
 
   const context : IAgentContext<IDIDManager & IKeyManager & IResolver> = {agent: agent}
   const didDocument: DIDDocument = await resolveDidOrThrow('did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb', context)
@@ -14,7 +14,7 @@ async function main() {
     packing:'authcrypt',  
     type: 'test',
     to: 'did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb',
-    from: 'did:key:z6MkiaUurwGLk7pPs5jCDc7ihwNumETanwasAPcsim8JEGiK',
+    from: 'did:web:trustfront.herokuapp.com',
     id: 'test',
     body: { hello: 'world' },
     toDID: didDocument
@@ -27,22 +27,26 @@ async function main() {
     packing: 'authcrypt'
 
   }
-
+  
   const packedMessageLight = await packLight(lightMessage,context)
   const packedMessage = await agent.packDIDCommMessage(message)
 
   const unpackedMessageLight = await agent.unpackDIDCommMessage(packedMessageLight)
   const unpackedMessage = await agent.unpackDIDCommMessage(packedMessage)
 
+  return packedMessageLight;
+
+
+
   // console.log(`Light Packed Message`)
   // console.log(packedMessage)
 
-  console.log(`Unpacked Message Light`)
-  console.log(unpackedMessageLight)
+  // console.log(`Unpacked Message Light`)
+  // console.log(unpackedMessageLight)
 
-  console.log(`Unpacked Message`)
-  console.log(unpackedMessage)
+  // console.log(`Unpacked Message`)
+  // console.log(unpackedMessage)
 
 }
 
-main().catch(console.log)
+// packDIDCommMessageLight().catch(console.log)

@@ -5,6 +5,7 @@ import path from 'path'
 import { json } from 'stream/consumers';
 import { agent } from '../src/veramo/setup'
 import {main as createkeys} from  './create-key-identifier'
+import {packDIDCommMessageLight} from './pack-message'
 
 const app = express();
 const PORT = process.env.PORT || 3001
@@ -75,10 +76,6 @@ async function main(){
   
     response.status(200).json(locations);
   };
- 
-  app.get("/api", (req, res) => {
-    res.json({ message: 'Howzit' });
-  });
 
   const siteIdentifier = await agent.didManagerFind({
     alias: 'trustfront.herokuapp.com'
@@ -103,6 +100,13 @@ async function main(){
 
   }
 
+  const packedMessage = await packDIDCommMessageLight();
+
+
+  app.get("/api", (req, res) => {
+    res.json({ message: packedMessage });
+  });
+
   app.get("/.well-known/did.json", (req, res) => {
     res.json(didDocument);
   });
@@ -121,9 +125,6 @@ async function main(){
 }
 
 main().catch(console.log)
-
-
-
 
 // import express from 'express';
 // import path from 'path';
