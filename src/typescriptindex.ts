@@ -1,3 +1,4 @@
+import { TAgent, IDIDManager, TKeyType } from '@veramo/core';
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path'
 import { agent } from '../src/veramo/setup'
@@ -14,13 +15,35 @@ interface LocationWithTimezone {
     utcOffset: number;
   };
       
+interface CreateDefaultDidOptions {
+  agent: TAgent<IDIDManager>
+  baseUrl: string
+  messagingServiceEndpoint?: string
+}
+
 async function main(){
   
-  // const creation = createkeys()
-  const identifiers = await agent.didManagerFind();
-  console.log("Identifiers are being Logged")
+  const createOptions : CreateDefaultDidOptions = {
 
-  console.log("Identifiers: " + JSON.stringify(identifiers))
+    agent:agent,
+    baseUrl:'trustfront.herokuapp.com'
+
+  }
+
+  const serverIdentifier = await createOptions?.agent?.didManagerGetOrCreate({
+    provider: 'did:web',
+    alias : 'trustfront.herokuapp.com',
+    options: {
+      keyType: <TKeyType>'Ed25519',
+    },
+  })
+
+  
+
+  // const identifiers = await agent.didManagerFind();
+  // console.log("Identifiers are being Logged")
+
+  // console.log("Identifiers: " + JSON.stringify(identifiers))
 
   const getLocationsWithTimezones = (request: Request, response: Response, next: NextFunction) => {
     let locations: LocationWithTimezone[] = [
@@ -54,8 +77,14 @@ async function main(){
   };
  
   app.get("/api", (req, res) => {
-    res.json({ message: JSON.stringify(identifiers) });
+    res.json({ message: 'Howzit' });
   });
+
+  const didDoc = serverIdentifier?.did;
+  app.get("/.well-known/did.json", (req, res) => {
+    res.json({ didDoc });
+  });
+
 
   app.get('/timezones', getLocationsWithTimezones);
 
