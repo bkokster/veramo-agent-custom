@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path'
 import { agent } from '../src/veramo/setup'
+import {main as createkeys} from  './create-key-identifier'
 
 const app = express();
 const PORT = process.env.PORT || 3001
@@ -15,7 +16,10 @@ interface LocationWithTimezone {
       
 async function main(){
   
+  const creation = createkeys()
   const identifiers = await agent.didManagerFind();
+
+  console.log("Identifiers: " + JSON.stringify(identifiers))
 
   const getLocationsWithTimezones = (request: Request, response: Response, next: NextFunction) => {
     let locations: LocationWithTimezone[] = [

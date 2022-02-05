@@ -1,7 +1,7 @@
 import { TKeyType } from '@veramo/core'
 import { agent } from './veramo/setup'
 
-async function main() {
+export async function main() {
 
   const identity = await agent.didManagerCreate({alias : "firstkey", provider : "did:key", kms : "local", options: {keyType: <TKeyType>'Ed25519',}})
   console.log(`New identity created`)
