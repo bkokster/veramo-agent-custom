@@ -100,11 +100,11 @@ async function main(){
 
   }
 
-  const packedMessage = await packDIDCommMessageLight();
-
+  // const packedMessage = await packDIDCommMessageLight();
 
   app.get("/api", (req, res) => {
-    res.json({ message: packedMessage });
+    // console.log(packedMessage)
+    res.json({ message: 'hallo hallo hallo' });
   });
 
   app.get("/.well-known/did.json", (req, res) => {
