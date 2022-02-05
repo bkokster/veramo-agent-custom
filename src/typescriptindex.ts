@@ -1,6 +1,8 @@
 import { TAgent, IDIDManager, TKeyType, DIDDocument, IAgentContext, IKeyManager, IResolver } from '@veramo/core';
+import { VerificationMethod } from 'did-resolver';
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path'
+import { json } from 'stream/consumers';
 import { agent } from '../src/veramo/setup'
 import {main as createkeys} from  './create-key-identifier'
 
@@ -78,23 +80,28 @@ async function main(){
     res.json({ message: 'Howzit' });
   });
 
-  
   const siteIdentifier = await agent.didManagerFind({
     alias: 'trustfront.herokuapp.com'
   })
 
-  const didDocument: DIDDocument = {
+  const verificationMethod : VerificationMethod[] =  siteIdentifier[0].keys.map(key =>({
+      
+    id : key.kid
+    ,controller: siteIdentifier[0].controllerKeyId!
+    ,type : key.type.toString()
+    ,publicKeyHex : key.publicKeyHex
+           
+  }))
+
+  const didDocument : DIDDocument = {
 
     '@context' : "https://www.w3.org/ns/did/v1",
     id: siteIdentifier[0].did,
     service: siteIdentifier[0].services,    
-    controller: siteIdentifier[0].controllerKeyId
+    controller: siteIdentifier[0].controllerKeyId,
+    verificationMethod: verificationMethod,
 
-  };
-  
-
-  // [{"did":"did:web:trustfront.herokuapp.com","provider":"did:web","alias":"trustfront.herokuapp.com","controllerKeyId":"849256a336e1f37947d5f1753ec6951353b10defa64c8313466875d7a859d647","keys":[{"kid":"849256a336e1f37947d5f1753ec6951353b10defa64c8313466875d7a859d647","kms":"local","type":"Ed25519","publicKeyHex":"849256a336e1f37947d5f1753ec6951353b10defa64c8313466875d7a859d647","meta":{"algorithms":["Ed25519","EdDSA"]}}],"services":[]}]}
-
+  }
 
   app.get("/.well-known/did.json", (req, res) => {
     res.json(didDocument);
