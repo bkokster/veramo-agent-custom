@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path'
+import { agent } from '../src/veramo/setup'
 
 const app = express();
 const PORT = process.env.PORT || 3001
@@ -13,6 +14,8 @@ interface LocationWithTimezone {
   };
       
 async function main(){
+  
+  const identifiers = await agent.didManagerFind();
 
   const getLocationsWithTimezones = (request: Request, response: Response, next: NextFunction) => {
     let locations: LocationWithTimezone[] = [
@@ -46,7 +49,7 @@ async function main(){
   };
  
   app.get("/api", (req, res) => {
-    res.json({ message: "Hello from server!" });
+    res.json({ message: identifiers });
   });
 
   app.get('/timezones', getLocationsWithTimezones);

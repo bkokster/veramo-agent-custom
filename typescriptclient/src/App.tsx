@@ -45,13 +45,13 @@ return (
   </div>
 );
 
-return (
-  <div className="App">
-    <header className="App-header">
-      <p>Hallo</p>
-    </header>
-  </div>
-);
+// return (
+//   <div className="App">
+//     <header className="App-header">
+//       <p>Hallo</p>
+//     </header>
+//   </div>
+// );
 
 }
 
