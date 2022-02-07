@@ -16,13 +16,13 @@ export async function packDIDCommMessageLight() {
     packing:'authcrypt',  
     type: 'test',
     to: 'did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb',
-    from: 'did:web:',
+    from: 'did:web:trustfront.herokuapp.com',
     id: 'test',
     body: { hello: 'world' },
     toDID: didDocument
 
   }
-
+  
   const message : IPackDIDCommMessageArgs = {
 
     message: lightMessage,

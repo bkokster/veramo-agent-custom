@@ -1,4 +1,4 @@
-import { TAgent, IDIDManager, TKeyType, DIDDocument, IAgentContext, IKeyManager, IResolver } from '@veramo/core';
+import { TAgent, IDIDManager, TKeyType, DIDDocument, IAgentContext, IKeyManager, IResolver, IKey } from '@veramo/core';
 import { VerificationMethod } from 'did-resolver';
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path'
@@ -6,6 +6,7 @@ import { json } from 'stream/consumers';
 import { agent } from '../src/veramo/setup'
 import {main as createkeys} from  './create-key-identifier'
 import {packDIDCommMessageLight} from './pack-message'
+import { resolveDidOrThrow, dereferenceDidKeys, isDefined, convertIdentifierEncryptionKeys, compressIdentifierSecp256k1Keys, createEcdhWrapper } from './veramo/did-comm/utils';
 
 const app = express();
 const PORT = process.env.PORT || 3001
@@ -36,10 +37,12 @@ async function main(){
       keyType: <TKeyType>'Ed25519',
     },
   })  
-  const identifiers = await agent.didManagerFind();  
   const siteIdentifier = await agent.didManagerFind({
     alias: 'trustfront.herokuapp.com'
   })
+
+  const convertedIdentifierEncryptionKeys:IKey[] = convertIdentifierEncryptionKeys(serverIdentifier);
+
   const verificationMethod : VerificationMethod[] =  siteIdentifier[0].keys.map(key =>({
       
     id : siteIdentifier[0].did+'#'+key.kid
@@ -49,7 +52,7 @@ async function main(){
            
   }))
 
-  const keyAgreement = siteIdentifier[0].keys.map(key =>({
+  const keyAgreement = convertedIdentifierEncryptionKeys.map(key =>({
       
     id : siteIdentifier[0].did+'#'+key.kid
     ,controller: siteIdentifier[0].did

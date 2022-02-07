@@ -2,19 +2,20 @@ import { IIdentifier } from "@veramo/core";
 import { _ExtendedIKey } from "@veramo/did-comm";
 import { send } from "process";
 import { agent } from "./veramo/setup";
+import {packDIDCommMessageLight} from './pack-message'
 
 async function main(){
 
   // const id = await agent.didManagerGet({did:'did:web:trustfront.herokuapp.com'})
 
-  const identifiers = await agent.resolveDid({didUrl:'did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb'})
-  console.log('DID Doc')
-  console.log(identifiers.didDocument);
 
-  const id = await agent.didManagerGet({did:'did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb'})
-  console.log('Keys')
-  console.log(id.keys);
+  // const identifiers = await agent.resolveDid({didUrl:'did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb'})
+  // console.log('DID Doc')
+  // console.log(identifiers.didDocument);
 
+  // const id = await agent.didManagerGet({did:'did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb'})
+  // console.log('Keys')
+  // console.log(id.keys);
 
     // const d = await agent.didManagerGetOrCreate({'alias':'secondkey'});
     // console.log(d.did)
@@ -50,7 +51,8 @@ async function main(){
 //   import { agent } from './veramo/setup';
 // import {createDefaultDid, CreateDefaultDidOptions} from './custom-functions'
 
+const packedMessage = await packDIDCommMessageLight();
+
+
 }
-
-
 main().catch(console.log)
