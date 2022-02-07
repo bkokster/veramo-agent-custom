@@ -48,6 +48,7 @@ async function main(){
     ,publicKeyHex : key.publicKeyHex
            
   }))
+
   const keyAgreement = siteIdentifier[0].keys.map(key =>({
       
     id : siteIdentifier[0].did+'#'+key.kid
@@ -70,15 +71,15 @@ async function main(){
 
   }
 
-  // const packedMessage = await packDIDCommMessageLight();
+  const packedMessage = await packDIDCommMessageLight();
 
   app.get("/api", (req, res) => {
     // console.log(packedMessage)
-    res.json({ message: didDocument });
+    res.json({ message: 'Hallo Hallo Hallo' });
   });
 
   app.get("/.well-known/did.json", (req, res) => {
-    res.json({message: didDocument});
+    res.json(didDocument);
   });
 
   // All other GET requests not handled before will return our React app

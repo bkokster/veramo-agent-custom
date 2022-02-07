@@ -9,14 +9,14 @@ export async function packDIDCommMessageLight() {
   const context : IAgentContext<IDIDManager & IKeyManager & IResolver> = {agent: agent}
   const didDocument: DIDDocument = await resolveDidOrThrow('did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb', context)
 
-  console.log(didDocument)
+  // console.log(didDocument)
 
   const lightMessage : IDIDCommMessageLight = {
       
     packing:'authcrypt',  
     type: 'test',
     to: 'did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb',
-    from: 'did:key:z6MkiaUurwGLk7pPs5jCDc7ihwNumETanwasAPcsim8JEGiK',
+    from: 'did:web:',
     id: 'test',
     body: { hello: 'world' },
     toDID: didDocument
@@ -37,8 +37,6 @@ export async function packDIDCommMessageLight() {
   const unpackedMessage = await agent.unpackDIDCommMessage(packedMessage)
 
   // return packedMessageLight;
-
-
 
   console.log(`Light Packed Message`)
   console.log(packedMessage)
