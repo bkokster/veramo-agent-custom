@@ -9,12 +9,14 @@ export async function packDIDCommMessageLight() {
   const context : IAgentContext<IDIDManager & IKeyManager & IResolver> = {agent: agent}
   const didDocument: DIDDocument = await resolveDidOrThrow('did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb', context)
 
+  console.log(didDocument)
+
   const lightMessage : IDIDCommMessageLight = {
       
     packing:'authcrypt',  
     type: 'test',
     to: 'did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb',
-    from: 'did:web:trustfront.herokuapp.com',
+    from: 'did:key:z6MkiaUurwGLk7pPs5jCDc7ihwNumETanwasAPcsim8JEGiK',
     id: 'test',
     body: { hello: 'world' },
     toDID: didDocument
@@ -34,19 +36,19 @@ export async function packDIDCommMessageLight() {
   const unpackedMessageLight = await agent.unpackDIDCommMessage(packedMessageLight)
   const unpackedMessage = await agent.unpackDIDCommMessage(packedMessage)
 
-  return packedMessageLight;
+  // return packedMessageLight;
 
 
 
-  // console.log(`Light Packed Message`)
-  // console.log(packedMessage)
+  console.log(`Light Packed Message`)
+  console.log(packedMessage)
 
-  // console.log(`Unpacked Message Light`)
-  // console.log(unpackedMessageLight)
+  console.log(`Unpacked Message Light`)
+  console.log(unpackedMessageLight)
 
-  // console.log(`Unpacked Message`)
-  // console.log(unpackedMessage)
+  console.log(`Unpacked Message`)
+  console.log(unpackedMessage)
 
 }
 
-// packDIDCommMessageLight().catch(console.log)
+packDIDCommMessageLight().catch(console.log)

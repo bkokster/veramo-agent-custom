@@ -83,20 +83,32 @@ async function main(){
 
   const verificationMethod : VerificationMethod[] =  siteIdentifier[0].keys.map(key =>({
       
-    id : key.kid
-    ,controller: siteIdentifier[0].controllerKeyId!
+    id : siteIdentifier[0].did+'#'+key.kid
+    ,controller: siteIdentifier[0].did
     ,type : key.type.toString()
     ,publicKeyHex : key.publicKeyHex
            
   }))
+
+  const keyAgreement = siteIdentifier[0].keys.map(key =>({
+      
+    id : siteIdentifier[0].did+'#'+key.kid
+    ,controller: siteIdentifier[0].did
+    ,type : 'X25519KeyAgreementKey2019'
+    ,publicKeyHex : key.publicKeyHex
+           
+  })
+  
+  )
 
   const didDocument : DIDDocument = {
 
     '@context' : "https://www.w3.org/ns/did/v1",
     id: siteIdentifier[0].did,
     service: siteIdentifier[0].services,    
-    controller: siteIdentifier[0].controllerKeyId,
+    controller: siteIdentifier[0].did,
     verificationMethod: verificationMethod,
+    keyAgreement: keyAgreement
 
   }
 

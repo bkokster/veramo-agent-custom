@@ -16,7 +16,8 @@
     "pack": "ts-node ./src/pack-message",
     "start": "node ./src/typescriptindex.js",
     "build": "tsc && cd typescriptclient && npm install && npm run build",
-    "sandy": "ts-node ./src/sandbox"
+    "sandy": "ts-node ./src/sandbox",
+    "resolve": "ts-node ./src/resolve"
   },
   "dependencies": {
     "@types/express": "^4.17.13",

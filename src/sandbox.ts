@@ -5,15 +5,26 @@ import { agent } from "./veramo/setup";
 
 async function main(){
 
-    const d = await agent.didManagerGetOrCreate({'alias':'secondkey'});
-    console.log(d.did)
+  // const id = await agent.didManagerGet({did:'did:web:trustfront.herokuapp.com'})
 
-    const dummyKey = await agent.keyManagerCreate({
-      kms: 'local',
-      type: 'Secp256k1',
-    })
+  const identifiers = await agent.resolveDid({didUrl:'did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb'})
+  console.log('DID Doc')
+  console.log(identifiers.didDocument);
 
-    const result = await agent.didManagerAddKey({did:'did:web:trustfront.herokuapp.com',key: dummyKey})
+  const id = await agent.didManagerGet({did:'did:key:z6MkrYivju3WXZFQzs4DWTqbwyfP7gMxiK4EgTAFpPEDQNcb'})
+  console.log('Keys')
+  console.log(id.keys);
+
+
+    // const d = await agent.didManagerGetOrCreate({'alias':'secondkey'});
+    // console.log(d.did)
+
+    // const dummyKey = await agent.keyManagerCreate({
+    //   kms: 'local',
+    //   type: 'Secp256k1',
+    // })
+
+    // const result = await agent.didManagerAddKey({did:'did:web:trustfront.herokuapp.com',key: dummyKey})
 
 //    1.1 check that args.message.from is a managed DID
 
