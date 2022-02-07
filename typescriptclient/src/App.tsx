@@ -40,9 +40,8 @@ React.useEffect(() => {
 return (
   <div className="App">
     <header className="App-header">
-      <p>Getting Data</p>
-    </header>
-    {!data ? "Loading..." : data}
+      <p>{!data ? "Loading..." : data}</p>
+    </header>    
   </div>
 );
 
