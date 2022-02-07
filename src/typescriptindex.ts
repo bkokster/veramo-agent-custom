@@ -26,61 +26,20 @@ interface CreateDefaultDidOptions {
 
 async function main(){
   
-  const createOptions : CreateDefaultDidOptions = {
+  // veramo initialisations 
 
-    agent:agent,
-    baseUrl:'trustfront.herokuapp.com'
-
-  }
-
+  const createOptions : CreateDefaultDidOptions = {agent:agent,baseUrl:'trustfront.herokuapp.com'}
   const serverIdentifier = await createOptions?.agent?.didManagerGetOrCreate({
     provider: 'did:web',
     alias : 'trustfront.herokuapp.com',
     options: {
       keyType: <TKeyType>'Ed25519',
     },
-  })
-  
-  const identifiers = await agent.didManagerFind();
-  // console.log("Identifiers are being Logged")
-
-  // console.log("Identifiers: " + JSON.stringify(identifiers))
-
-  const getLocationsWithTimezones = (request: Request, response: Response, next: NextFunction) => {
-    let locations: LocationWithTimezone[] = [
-       {
-        location: 'Germany',
-        timezoneName: 'Central European Time',
-        timezoneAbbr: 'CET',
-        utcOffset: 1
-      },
-      {
-        location: 'China',
-        timezoneName: 'China Standard Time',
-        timezoneAbbr: 'CST',
-        utcOffset: 8
-      },
-      {
-        location: 'Argentina',
-        timezoneName: 'Argentina Time',
-        timezoneAbbr: 'ART',
-        utcOffset: -3
-      },
-      {
-        location: 'Japan',
-        timezoneName: 'Japan Standard Time',
-        timezoneAbbr: 'JST',
-        utcOffset: 9
-      }
-    ];
-  
-    response.status(200).json(locations);
-  };
-
+  })  
+  const identifiers = await agent.didManagerFind();  
   const siteIdentifier = await agent.didManagerFind({
     alias: 'trustfront.herokuapp.com'
   })
-
   const verificationMethod : VerificationMethod[] =  siteIdentifier[0].keys.map(key =>({
       
     id : siteIdentifier[0].did+'#'+key.kid
@@ -89,7 +48,6 @@ async function main(){
     ,publicKeyHex : key.publicKeyHex
            
   }))
-
   const keyAgreement = siteIdentifier[0].keys.map(key =>({
       
     id : siteIdentifier[0].did+'#'+key.kid
@@ -116,14 +74,12 @@ async function main(){
 
   app.get("/api", (req, res) => {
     // console.log(packedMessage)
-    res.json({ message: identifiers });
+    res.json({ message: didDocument });
   });
 
   app.get("/.well-known/did.json", (req, res) => {
-    res.json(didDocument);
+    res.json({message: didDocument});
   });
-
-  app.get('/timezones', getLocationsWithTimezones);
 
   // All other GET requests not handled before will return our React app
   app.get('*', (req, res) => {

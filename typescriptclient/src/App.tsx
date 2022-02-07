@@ -42,7 +42,7 @@ return (
     <header className="App-header">
       <p>Getting Data</p>
     </header>
-    {!data ? "Loading..." : data}
+    {!data ? "Loading..." : data.message}
   </div>
 );
 
