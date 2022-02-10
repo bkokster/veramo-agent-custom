@@ -33,7 +33,7 @@ import { Entities, KeyStore, DIDStore, IDataStoreORM, PrivateKeyStore, migration
 import { createConnection } from 'typeorm'
 
 // This will be the name for the local sqlite database for demo purposes
-const DATABASE_FILE = 'database.sqlite'
+const DATABASE_FILE = 'database.veramo2'
 
 // You will need to get a project ID from infura https://www.infura.io
 const INFURA_PROJECT_ID = 'b721974ba86542ffaffc0fae2de71c6f'
@@ -43,6 +43,15 @@ const KMS_SECRET_KEY = 'abda812ffc49b48b3f6a7fd335b43fcb6ef1dcfb4cd5ababca5a7ae3
 
 import {IDIDComm, DIDComm} from '@veramo/did-comm'
 
+// const dbConnection = createConnection({
+//   type: 'react-native',
+//   database: 'veramo.sqlite',
+//   location: 'default',
+//   migrations: migrations,
+//   migrationsRun: true,
+//   logging: ['error', 'info', 'warn'],
+//   entities: Entities,
+// })
 const dbConnection = createConnection({
   type: 'sqlite',
   database: DATABASE_FILE,
@@ -52,7 +61,6 @@ const dbConnection = createConnection({
   logging: ['error', 'info', 'warn'],
   entities: Entities,
 })
-
 export const agent = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver &IDIDComm>({
   plugins: [
     new KeyManager({
@@ -63,8 +71,13 @@ export const agent = createAgent<IDIDManager & IKeyManager & IDataStore & IDataS
     }),
     new DIDManager({
       store: new DIDStore(dbConnection),
-      defaultProvider: 'did:ethr:rinkeby',
+      defaultProvider: 'did:ethr',
       providers: {
+        'did:ethr': new EthrDIDProvider({
+          defaultKms: 'local',
+          network: 'mainnet',
+          rpcUrl: 'https://mainnet.infura.io/v3/' + INFURA_PROJECT_ID,
+        }),
         'did:ethr:rinkeby': new EthrDIDProvider({
           defaultKms: 'local',
           network: 'rinkeby',

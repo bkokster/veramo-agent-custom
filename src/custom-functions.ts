@@ -19,29 +19,13 @@ async function mapIdentifierKeysToDoc(
       context,
     )
 
-    console.log('---------------------------keyAgreementKeys---------------------------------------')
-    console.log(keyAgreementKeys)
-    console.log('---------------------------keyAgreementKeys---------------------------------------')
-  
     let localKeys = identifier.keys.filter(isDefined)
-
-    console.log('---------------------------localKeys---------------------------------------')
-    console.log(localKeys)
-    console.log('---------------------------localKeys---------------------------------------')
-  
-
 
     if (section === 'keyAgreement') {
       localKeys = convertIdentifierEncryptionKeys(identifier)
     } else {
       localKeys = compressIdentifierSecp256k1Keys(identifier)
     }
-
-
-    console.log('---------------------------localKeysConvert---------------------------------------')
-    console.log(localKeys)
-    console.log('---------------------------localKeysConvert---------------------------------------')
-  
 
     // finally map the didDocument keys to the identifier keys by comparing `publicKeyHex`
     const extendedKeys: _ExtendedIKey[] = keyAgreementKeys
